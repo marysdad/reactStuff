@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import ToDoItem from "./ToDoItem";
+import InputArea from "./InputArea";
 
 function App() {
 
@@ -20,27 +21,47 @@ function App() {
     
   }
 
+  function deleteItem(id){ // the id is coming from the line 10 in the ToDoItem component
+    setItems(prevItems =>{ // this is functional programming where functions are passed into other functions like props
+      return prevItems.filter((item,index) => {
+        return index !== id; // means loop and return all array elements removing only element with id passed.
+      })
+    });
+  }
+
   return (
     <div className="container">
+
       <div className="heading">
         <h1>To-Do List</h1>
       </div>
+
       <div className="form">
+
         <input 
         onChange={handleChange}
         type="text"
         value={inputText}  />
+
         <button onClick={addItem} >
           <span>Add</span>
         </button>
+
       </div>
+
       <div>
-        <ul>
-          {items.map(item =>
-           <ToDoItem text={item}/>
+        <ul>{/* below is looping through array using .map  */}
+          {items.map((item, index) => 
+           <ToDoItem 
+           key={index}
+           id={index}
+           text={item}
+           onChecked={deleteItem}  
+           />
            ) } 
         </ul>
       </div>
+
     </div>
   );
 }
