@@ -4,17 +4,12 @@ import InputArea from "./InputArea";
 
 function App() {
 
-  const[inputText, setInputText] = useState(""); // this state holds old and new input
   const[items, setItems] = useState([]); // this state holds old and new list items for rendering.
 
-  //this function holds new list items
-  function handleChange(event){
-    const newValue = event.target.value;
-    setInputText(newValue);
-  }
+ 
 
   //this function add new list item to the list using the spread feature
-  function addItem(){
+  function addItem(inputText){
     setItems(prevItems =>{
       return [...prevItems,inputText];
     });
@@ -36,18 +31,9 @@ function App() {
         <h1>To-Do List</h1>
       </div>
 
-      <div className="form">
-
-        <input 
-        onChange={handleChange}
-        type="text"
-        value={inputText}  />
-
-        <button onClick={addItem} >
-          <span>Add</span>
-        </button>
-
-      </div>
+      <InputArea
+        onAdd={addItem}
+      />
 
       <div>
         <ul>{/* below is looping through array using .map  */}
